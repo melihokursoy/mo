@@ -5,12 +5,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/melih/mo.git",
+    "url": "https://github.com/melihokursoy/mo.git",
     "directory": "packages/ui"
   },
-  "homepage": "https://github.com/melih/mo#readme",
+  "homepage": "https://github.com/melihokursoy/mo#readme",
   "bugs": {
-    "url": "https://github.com/melih/mo/issues"
+    "url": "https://github.com/melihokursoy/mo/issues"
   },
   "keywords": [
     "react",
