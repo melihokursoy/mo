@@ -2,19 +2,11 @@ name: Publish @mo/ui to npm
 
 on:
   push:
-    tags:
-      - "@mo/ui@*"
+    branches:
+      - master
+    paths:
+      - "packages/ui/**"
   workflow_dispatch:
-    inputs:
-      version:
-        description: "Version bump type"
-        required: true
-        default: "patch"
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,6 +24,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -49,14 +42,15 @@ jobs:
       - name: Build UI package
         run: pnpm --filter @mo/ui build
 
-      - name: Version bump (manual trigger only)
-        if: github.event_name == 'workflow_dispatch'
+      - name: Auto version bump
         working-directory: packages/ui
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npm version ${{ github.event.inputs.version }} -m "chore(ui): release %s"
-          git push --follow-tags
+          npm version patch --no-git-tag-version
+          git add package.json
+          git commit -m "chore(ui): bump version [skip ci]" || echo "No changes to commit"
+          git push
 
       - name: Publish to npm
         working-directory: packages/ui
