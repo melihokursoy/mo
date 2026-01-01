@@ -41,7 +41,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm --filter @mo/ui exec -- playwright install --with-deps
 
       - name: Run UI tests
         run: pnpm turbo run test --filter=@mo/ui

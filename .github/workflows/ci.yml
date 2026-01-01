@@ -2,63 +2,6 @@ name: CI
 
 on:
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-
-jobs:
-  vitest:
-    name: Run Vitest (unit & storybook)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node + pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build packages (styles + lib)
-        run: pnpm turbo run build --filter=@mo/ui
-
-      - name: Run Vitest (package @mo/ui)
-        run: pnpm --filter=@mo/ui exec vitest --run --reporter=dot
-
-  chromatic:
-    name: Chromatic visual tests
-    runs-on: ubuntu-latest
-    needs: vitest
-    if: secrets.CHROMATIC_PROJECT_TOKEN != ''
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node + pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build Storybook static
-        run: pnpm turbo run build-storybook --filter=@mo/ui
-
-      - name: Publish to Chromatic
-        uses: chromaui/action@v1
-        with:
-          # Add CHROMATIC_PROJECT_TOKEN to your repo secrets
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          # Path to the built Storybook (the Chromatic action will auto-detect in most cases)
-          # storybookBuildDir: packages/ui/storybook-static
-name: CI
-
-on:
-  push:
     branches: [main, master]
   pull_request:
     branches: [main, master]
