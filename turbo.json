@@ -14,6 +14,16 @@
     },
     "check-types": {
       "dependsOn": ["^build"]
+    },
+    "test": {
+      "cache": false
+    },
+    "storybook": {
+      "cache": false,
+      "persistent": true
+    },
+    "build-storybook": {
+      "cache": false
     }
   }
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "../utils/cn"; // Legacy file, consider removing if not used
+import { cn } from "../../utils/cn";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "bordered" | "elevated";
