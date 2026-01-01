@@ -62,43 +62,21 @@ Storybook runs on port 6006. If you need to start Storybook, the `storybook` scr
 - If you MUST create a temporary file for complex processing, use a hidden directory named `.copilot-tmp` in the root and **DELETE** the entire directory immediately after the task is complete.
 - **NEVER** leave the workspace in a "dirty" state with debugging artifacts.
 
-### Available Turbo Tasks (turbo.json)
-- `pnpm turbo run build --filter=<package>` - Build a package
-- `pnpm turbo run dev --filter=<package>` - Run dev for a package
 - `pnpm turbo run lint --filter=<package>` - Lint a package
 - `pnpm turbo run check-types --filter=<package>` - Type check a package
-- `pnpm turbo run storybook --filter=<package>` - Run Storybook (Handles kill-port)
-- `pnpm turbo run build-storybook --filter=<package>` - Build Storybook
-- `pnpm turbo run test --filter=<package>` - Run tests
-- `pnpm turbo run test:ui --filter=<package>` - Run tests with UI
-- `pnpm turbo run test:e2e --filter=<package>` - Run Playwright E2E tests
-
-## Storybook v10 & Vitest Browser Mode (CRITICAL!)
-
-This project uses **Storybook v10** with the official **Vitest Browser Mode** integration via `@storybook/addon-vitest`.
 
 ### 1. Testing Architecture
 - **Runner**: Vitest v3+ with `browser` mode enabled.
 - **Provider**: Playwright (Chromium).
 - **Plugin**: `storybookTest()` from `@storybook/addon-vitest/vitest-plugin`.
 - **Setup**: `.storybook/vitest.setup.ts` calls `setProjectAnnotations`.
-
-### 2. Interaction Testing Rules
-- **Imports**: ALWAYS import `expect`, `userEvent`, `within`, `fn` from `storybook/test`.
-- **Play Functions**: 
   - Use the `canvas` object from the context: `play: async ({ canvas, step }) => { ... }`.
   - Use `step` to organize complex interactions.
-  - ALWAYS use `await` for `userEvent` and `expect` (assertions are async in browser mode).
-- **Assertions**: Use `await expect(element).toBeInTheDocument()`, `await expect(element).toHaveValue()`, etc.
 
 ### 3. Testing Commands
 - **Run All Tests**: `pnpm turbo run test-storybook --filter=@mo/ui`
-- **Watch Mode**: `pnpm turbo run test-storybook --filter=@mo/ui -- --watch`
 - **UI Mode**: `pnpm turbo run test-storybook --filter=@mo/ui -- --ui`
 
-### 4. Story File Structure (CSF 3)
-
-```tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, within, fn } from 'storybook/test';
 import { MyComponent } from './MyComponent';
@@ -130,10 +108,6 @@ export const Interactive: Story = {
 - ❌ **NEVER** use `fireEvent`. Use `userEvent` for realistic interactions.
 - ❌ **NEVER** forget `await` before `expect` or `userEvent` calls.
 - ❌ **NEVER** use `@storybook/jest` or `@storybook/testing-library`.
-- ❌ **NEVER** run `vitest` without the `--project=storybook` flag (handled by `test-storybook` script).
-
-## Workspace Hygiene (CRITICAL!)
-- **NEVER** create temporary files (`.txt`, `.json`, `.log`) in the workspace.
-- **NEVER** use redirection `>` in terminal commands.
 - If you need to debug, use `console.log` or read terminal output directly.
 - Any temporary artifacts MUST be in `.copilot-tmp/` and deleted immediately.
+

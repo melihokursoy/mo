@@ -1,4 +1,7 @@
+/// <reference types="vitest" />
+import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { Button } from './Button';
 
 describe('Button', () => {
@@ -8,8 +11,8 @@ describe('Button', () => {
   });
 
   it('applies all variants and sizes', () => {
-    const variants = ['primary', 'secondary', 'outline', 'ghost'];
-    const sizes = ['sm', 'md', 'lg'];
+    const variants = ['primary', 'secondary', 'outline', 'ghost'] as const;
+    const sizes = ['sm', 'md', 'lg'] as const;
     variants.forEach(variant => {
       sizes.forEach(size => {
         const { getByRole, unmount } = render(
@@ -41,7 +44,7 @@ describe('Button', () => {
   });
 
   it('calls onClick when clicked', () => {
-    const handleClick = jest.fn();
+    const handleClick = vi.fn();
     const { getByRole } = render(<Button onClick={handleClick}>Test</Button>);
     fireEvent.click(getByRole('button'));
     expect(handleClick).toHaveBeenCalled();

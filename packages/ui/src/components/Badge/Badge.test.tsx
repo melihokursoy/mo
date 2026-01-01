@@ -1,4 +1,8 @@
+/// <reference types="vitest" />
+import * as React from 'react';
 import { render } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import '@testing-library/jest-dom';
 import { Badge } from './Badge';
 
 describe('Badge', () => {
@@ -8,8 +12,8 @@ describe('Badge', () => {
   });
 
   it('applies all variants and sizes', () => {
-    const variants = ['default', 'success', 'warning', 'error', 'info'];
-    const sizes = ['sm', 'md'];
+    const variants = ['default', 'success', 'warning', 'error', 'info'] as const;
+    const sizes = ['sm', 'md'] as const;
     variants.forEach(variant => {
       sizes.forEach(size => {
         const { getByText, unmount } = render(
@@ -29,7 +33,7 @@ describe('Badge', () => {
   });
 
   it('forwards ref', () => {
-    const ref = { current: null };
+    const ref = React.createRef<HTMLSpanElement>();
     render(<Badge ref={ref}>Badge</Badge>);
     // Not a strong test, but ensures no crash
     expect(ref).toBeDefined();

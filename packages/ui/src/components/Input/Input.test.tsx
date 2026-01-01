@@ -1,4 +1,8 @@
+/// <reference types="vitest" />
+import * as React from 'react';
 import { render } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import '@testing-library/jest-dom';
 import { Input } from './Input';
 
 describe('Input', () => {
@@ -29,11 +33,12 @@ describe('Input', () => {
 
   it('applies custom className', () => {
     const { container } = render(<Input className="custom" />);
-    expect(container.querySelector('input')?.className).toMatch(/custom/);
+    const className = container.querySelector('input')?.className ?? '';
+    expect(className).toMatch(/custom/);
   });
 
   it('forwards ref', () => {
-    const ref = { current: null };
+    const ref = React.createRef<HTMLInputElement>();
     render(<Input ref={ref} />);
     expect(ref).toBeDefined();
   });

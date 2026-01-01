@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
+import { within } from '@testing-library/dom';
 import { Badge } from './Badge';
 
 const meta: Meta<typeof Badge> = {
@@ -16,7 +17,7 @@ type Story = StoryObj<typeof Badge>;
 
 export const Default: Story = {
   args: { children: 'Default', variant: 'default' },
-  play: async ({ canvas }) => {
+  play: async ({ canvas }: { canvas: ReturnType<typeof within> }) => {
     const badge = canvas.getByText('Default');
     await expect(badge).toBeInTheDocument();
   },
@@ -24,7 +25,7 @@ export const Default: Story = {
 
 export const Success: Story = {
   args: { children: 'Success', variant: 'success' },
-  play: async ({ canvas }) => {
+  play: async ({ canvas }: { canvas: ReturnType<typeof within> }) => {
     const badge = canvas.getByText('Success');
     await expect(badge).toBeInTheDocument();
     await expect(badge).toHaveClass('bg-green-100');
@@ -37,7 +38,7 @@ export const Warning: Story = {
 
 export const Error: Story = {
   args: { children: 'Error', variant: 'error' },
-  play: async ({ canvas }) => {
+  play: async ({ canvas }: { canvas: ReturnType<typeof within> }) => {
     const badge = canvas.getByText('Error');
     await expect(badge).toBeInTheDocument();
     await expect(badge).toHaveClass('bg-red-100');

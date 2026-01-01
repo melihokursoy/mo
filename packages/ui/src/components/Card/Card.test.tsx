@@ -1,4 +1,8 @@
+/// <reference types="vitest" />
+import * as React from 'react';
 import { render } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import '@testing-library/jest-dom';
 import { Card, CardHeader, CardTitle, CardContent } from './Card';
 
 describe('Card', () => {
@@ -16,17 +20,19 @@ describe('Card', () => {
   });
 
   it('applies all variants', () => {
-    const variants = ['default', 'bordered', 'elevated'];
+    const variants = ['default', 'bordered', 'elevated'] as const;
     variants.forEach(variant => {
       const { container, unmount } = render(<Card variant={variant}>Test</Card>);
-      expect(container.firstChild?.className).toMatch(new RegExp(variant));
+      const className = container.firstElementChild?.className ?? '';
+      expect(className).toMatch(new RegExp(variant));
       unmount();
     });
   });
 
   it('applies custom className', () => {
     const { container } = render(<Card className="custom">Test</Card>);
-    expect(container.firstChild?.className).toMatch(/custom/);
+    const className = container.firstElementChild?.className ?? '';
+    expect(className).toMatch(/custom/);
   });
 
   it('renders children', () => {
@@ -35,7 +41,7 @@ describe('Card', () => {
   });
 
   it('forwards ref', () => {
-    const ref = { current: null };
+    const ref = React.createRef<HTMLDivElement>();
     render(<Card ref={ref}>Test</Card>);
     expect(ref).toBeDefined();
   });

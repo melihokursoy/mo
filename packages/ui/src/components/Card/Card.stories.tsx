@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
+import { within } from '@testing-library/dom';
 import { Card, CardHeader, CardTitle, CardContent } from './Card';
 
 const meta: Meta<typeof Card> = {
@@ -23,7 +24,7 @@ export const Default: Story = {
     </Card>
   ),
   args: { variant: 'default' },
-  play: async ({ canvas }) => {
+  play: async ({ canvas }: { canvas: ReturnType<typeof within> }) => {
     await expect(canvas.getByText('Card Title')).toBeInTheDocument();
     await expect(canvas.getByText('This is the card content.')).toBeInTheDocument();
   },
