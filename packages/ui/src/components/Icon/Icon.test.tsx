@@ -22,7 +22,7 @@ describe('Icon', () => {
 
   it('forwards ref to the underlying SVG element', () => {
     const ref = createRef<SVGSVGElement>();
-    const { getByTestId } = render(<Icon icon={Heart} ref={ref} data-testid="icon-ref" /> as any);
+    const { getByTestId } = render(<Icon icon={Heart} ref={ref} data-testid="icon-ref" />);
     const svg = getByTestId('icon-ref');
     expect(svg).toBeInTheDocument();
     expect(ref.current).toBeInstanceOf(SVGElement);
@@ -40,7 +40,7 @@ describe('Icon', () => {
     const weights: Array<PhosphorIconProps['weight']> = ['thin', 'regular', 'bold'];
 
     sizes.forEach((s) => {
-      const { container } = render(<Icon icon={Heart} size={s as any} />);
+      const { container } = render(<Icon icon={Heart} size={s as string} />);
       expect(container.querySelector('svg')).toBeInTheDocument();
     });
 

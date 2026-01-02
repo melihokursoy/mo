@@ -46,7 +46,7 @@
     "build": "tsup && pnpm build:styles",
     "build:styles": "npx @tailwindcss/cli -i ./src/styles.css -o ./dist/styles.css --minify",
     "dev": "tsup --watch",
-    "lint": "eslint src/",
+    "lint": "pnpm exec eslint --config ../../eslint.config.cjs --ext .ts,.tsx src/",
     "check-types": "tsc --noEmit",
     "storybook": "npx kill-port 6006 && pnpm build:styles && storybook dev -p 6006",
     "build-storybook": "storybook build",

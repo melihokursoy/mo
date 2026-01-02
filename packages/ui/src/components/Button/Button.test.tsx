@@ -76,12 +76,13 @@ describe('Button', () => {
   });
 
   it('forwards size and weight to icon based on button size (uses real icon)', () => {
-    const mapping: Record<string, string> = { sm: '16', md: '20', lg: '24' };
-    const weightMap: Record<string, IconWeight> = { sm: 'thin', md: 'regular', lg: 'bold' };
+    const mapping = { sm: '16', md: '20', lg: '24' } as const;
+    const weightMap = { sm: 'thin', md: 'regular', lg: 'bold' } as const;
+    type Size = keyof typeof mapping;
 
-    (Object.keys(mapping) as Array<keyof typeof mapping>).forEach((s) => {
+    (Object.keys(mapping) as Array<Size>).forEach((s) => {
       const { container, unmount } = render(
-        <Button size={s as any} icon={<Heart data-testid={`heart-${s}`} />} />
+        <Button size={s} icon={<Heart data-testid={`heart-${s}`} />} />
       );
       const svg = container.querySelector(`[data-testid="heart-${s}"]`) as SVGElement | null;
       expect(svg).toBeInTheDocument();

@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { IconWeight } from '@codecrib/ui/icons';
 import { cn } from "../../utils/cn";
 
 export interface ButtonProps
@@ -49,7 +50,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         lg: 24,
       } as const;
 
-      const iconWeightMap: Record<NonNullable<ButtonProps['size']>, string> = {
+      const iconWeightMap: Record<NonNullable<ButtonProps['size']>, IconWeight> = {
         sm: 'regular',
         md: 'regular',
         lg: 'bold',
@@ -58,12 +59,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       const renderIcon = () => {
         if (!icon) return null;
         if (React.isValidElement(icon)) {
-          const sizeProp = (icon.props && icon.props.size) ?? undefined;
-          const weightProp = (icon.props && icon.props.weight) ?? undefined;
+          const sizeProp = (icon.props as { size?: number | string })?.size;
+          const weightProp = (icon.props as { weight?: IconWeight })?.weight;
           const key = size as NonNullable<ButtonProps['size']>;
           const desired = {
-            size: sizeProp ?? iconSizeMap[key],
-            weight: weightProp ?? (iconWeightMap[key] as any),
+            size: (sizeProp as number | undefined) ?? iconSizeMap[key],
+            weight: weightProp ?? iconWeightMap[key],
           };
           try {
             return React.cloneElement(icon as React.ReactElement, desired);

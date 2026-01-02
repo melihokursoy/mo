@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Run ESLint autofix across the workspace (stages fixes), then typecheck
+pnpm turbo run lint -- --fix
+git add -A
 pnpm turbo run check-types

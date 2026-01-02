@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "pnpm exec eslint --config ../../eslint.config.cjs --ext .ts,.tsx,.js,.jsx .",
     "preview": "vite preview",
     "check-types": "tsc --noEmit"
   },
