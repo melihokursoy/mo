@@ -11,5 +11,9 @@ export type { InputProps } from "./components/Input/Input";
 export { Badge } from "./components/Badge/Badge";
 export type { BadgeProps } from "./components/Badge/Badge";
 
+export { Icon } from "./components/Icon/Icon";
+export type { IconProps } from "./components/Icon/Icon";
+
 // Utilities
 export { cn } from "./utils/cn";
+// Icons are exported from a dedicated `@codecrib/ui/icons` entrypoint

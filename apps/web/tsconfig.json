@@ -1,5 +1,5 @@
 {
-  "extends": "@mo/typescript-config/vite.json",
+  "extends": "@codecrib/typescript-config/vite.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

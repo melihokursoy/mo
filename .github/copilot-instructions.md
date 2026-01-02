@@ -4,9 +4,9 @@ Follow these rules to ensure consistent, maintainable, and efficient dependency 
 
 1. **Always Use pnpm with --filter**
   - To add a dependency to a specific package, run from the monorepo root:
-    `pnpm add <package> --filter=@mo/<package-name>`
+    `pnpm add <package> --filter=@codecrib/<package-name>`
   - For dev dependencies:
-    `pnpm add -D <package> --filter=@mo/<package-name>`
+    `pnpm add -D <package> --filter=@codecrib/<package-name>`
 
 2. **Never Add Packages from Inside a Package Directory**
   - Do NOT `cd` into a package and run `pnpm add`.
@@ -44,17 +44,17 @@ This is a **pnpm monorepo with Turborepo**. You MUST follow these rules without 
 
 ```bash
 # ✅ CORRECT - Always use turbo with filter
-pnpm turbo run <command> --filter=@mo/ui
+pnpm turbo run <command> --filter=@codecrib/ui
 
 # ❌ WRONG - Never do these
 cd packages/ui && pnpm <command>
-pnpm --filter @mo/ui <command>
+pnpm --filter @codecrib/ui <command>
 ```
 
 ### 2. Port Management (Port 6006)
 Storybook runs on port 6006. If you need to start Storybook, the `storybook` script in `packages/ui/package.json` already includes `kill-port 6006`. 
 **ALWAYS** use the turbo command which will handle killing the port:
-`pnpm turbo run storybook --filter=@mo/ui`
+`pnpm turbo run storybook --filter=@codecrib/ui`
 
 ### 3. Workspace Hygiene (CRITICAL!)
 **NEVER** create temporary files, log files, or redirection outputs (e.g., `> output.txt`) in the project root or package directories. 
@@ -74,8 +74,8 @@ Storybook runs on port 6006. If you need to start Storybook, the `storybook` scr
   - Use `step` to organize complex interactions.
 
 ### 3. Testing Commands
-- **Run All Tests**: `pnpm turbo run test-storybook --filter=@mo/ui`
-- **UI Mode**: `pnpm turbo run test-storybook --filter=@mo/ui -- --ui`
+-- **Run All Tests**: `pnpm turbo run test-storybook --filter=@codecrib/ui`
+-- **UI Mode**: `pnpm turbo run test-storybook --filter=@codecrib/ui -- --ui`
 
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, within, fn } from 'storybook/test';

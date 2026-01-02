@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@codecrib/web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,13 +11,13 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@mo/ui": "workspace:*",
+    "@codecrib/ui": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@mo/tailwind-config": "workspace:*",
-    "@mo/typescript-config": "workspace:*",
+    "@codecrib/tailwind-config": "workspace:*",
+    "@codecrib/typescript-config": "workspace:*",
     "@tailwindcss/vite": "^4.0.0",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",

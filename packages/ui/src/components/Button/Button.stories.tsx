@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, fn } from 'storybook/test';
 import { within } from '@testing-library/dom';
 import { Button, type ButtonProps } from './Button';
+import { Heart } from '@codecrib/ui/icons';
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
@@ -38,4 +39,12 @@ export const Outline: Story = {
 
 export const Ghost: Story = {
   args: { children: 'Ghost Button', variant: 'ghost' },
+};
+
+export const WithIcon: Story = {
+  args: { children: 'With Icon', variant: 'primary', icon: <Heart size={16} />, iconPosition: 'left' },
+  play: async ({ canvas }) => {
+    const btn = canvas.getByRole('button', { name: 'With Icon' });
+    await expect(btn).toBeInTheDocument();
+  },
 };

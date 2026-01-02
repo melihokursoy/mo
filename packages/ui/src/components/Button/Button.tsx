@@ -6,6 +6,10 @@ export interface ButtonProps
   variant?: "primary" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
   isLoading?: boolean;
+  /** Icon element to render inside the button */
+  icon?: React.ReactNode;
+  /** Position for the icon when `icon` is provided */
+  iconPosition?: "left" | "right";
 }
 
 const variantStyles = {
@@ -32,11 +36,43 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size = "md",
       isLoading = false,
       disabled,
-      children,
+        children,
+        icon,
+        iconPosition = 'left',
       ...props
     },
     ref
   ) => {
+      const iconSizeMap: Record<NonNullable<ButtonProps['size']>, number> = {
+        sm: 16,
+        md: 20,
+        lg: 24,
+      } as const;
+
+      const iconWeightMap: Record<NonNullable<ButtonProps['size']>, string> = {
+        sm: 'regular',
+        md: 'regular',
+        lg: 'bold',
+      } as const;
+
+      const renderIcon = () => {
+        if (!icon) return null;
+        if (React.isValidElement(icon)) {
+          const sizeProp = (icon.props && icon.props.size) ?? undefined;
+          const weightProp = (icon.props && icon.props.weight) ?? undefined;
+          const key = size as NonNullable<ButtonProps['size']>;
+          const desired = {
+            size: sizeProp ?? iconSizeMap[key],
+            weight: weightProp ?? (iconWeightMap[key] as any),
+          };
+          try {
+            return React.cloneElement(icon as React.ReactElement, desired);
+          } catch {
+            return icon;
+          }
+        }
+        return icon;
+      };
     return (
       <button
         ref={ref}
@@ -71,7 +107,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             />
           </svg>
         )}
-        {children}
+        {icon && iconPosition === 'left' && (
+          <span className="mr-2 inline-flex items-center">{renderIcon()}</span>
+        )}
+        <span className="inline-flex items-center">{children}</span>
+        {icon && iconPosition === 'right' && (
+          <span className="ml-2 inline-flex items-center">{renderIcon()}</span>
+        )}
       </button>
     );
   }

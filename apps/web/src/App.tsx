@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Button, Card, Input, Badge } from "@mo/ui";
+import { Button, Card, Input, Badge, Icon } from "@codecrib/ui";
+import { Heart, Bell, Check } from "@codecrib/ui/icons";
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -15,7 +16,7 @@ function App() {
       <div className="max-w-4xl mx-auto space-y-8">
         <header className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            @mo/ui Component Library
+            @codecrib/ui Component Library
           </h1>
           <p className="text-gray-600">
             A React UI component library built with TypeScript and TailwindCSS
@@ -111,6 +112,35 @@ function App() {
             </Card>
           </div>
         </div>
+
+        {/* Icons Section */}
+        <Card variant="bordered">
+          <h2 className="text-2xl font-semibold mb-4">Icons</h2>
+          <div className="flex items-center gap-4">
+            <Icon icon={Heart} size={20} weight="thin" color="#ef4444" />
+            <Icon icon={Bell} size={24} weight="regular" color="#0ea5e9" />
+            <Icon icon={Check} size={28} weight="bold" color="#10b981" />
+          </div>
+          <div className="mt-4">
+            <h3 className="text-lg font-medium mb-2">Buttons with Icons</h3>
+            <div className="flex flex-wrap gap-4">
+              <Button size="sm" icon={<Heart />} iconPosition="left">Like</Button>
+              <Button size="sm" icon={<Bell  />} iconPosition="right">Notify</Button>
+              <Button size="sm" variant="outline" icon={<Check />} iconPosition="left">Confirm</Button>
+            </div>
+            <div className="flex flex-wrap gap-4 mt-2">
+              <Button size="md" icon={<Heart />} iconPosition="left">Like</Button>
+              <Button size="md" icon={<Bell  />} iconPosition="right">Notify</Button>
+              <Button size="md" variant="outline" icon={<Check />} iconPosition="left">Confirm</Button>
+            </div>
+            <div className="flex flex-wrap gap-4 mt-2">
+              <Button size="lg" icon={<Heart />} iconPosition="left">Like</Button>
+              <Button size="lg" icon={<Bell  />} iconPosition="right">Notify</Button>
+              <Button size="lg" variant="outline" icon={<Check />} iconPosition="left">Confirm</Button>
+            </div>
+
+          </div>
+        </Card>
       </div>
     </div>
   );

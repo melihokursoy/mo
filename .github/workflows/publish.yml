@@ -1,4 +1,4 @@
-name: Publish @mo/ui to npm
+name: Publish @codecrib/ui to npm
 
 on:
   push:
@@ -41,13 +41,13 @@ jobs:
         run: pnpm install --frozen-lockfile
         
       - name: Build UI package
-        run: pnpm --filter @mo/ui build
+        run: pnpm --filter @codecrib/ui build
 
       - name: Install Playwright browsers
-        run: pnpm --filter @mo/ui exec -- playwright install --with-deps
+        run: pnpm --filter @codecrib/ui exec -- playwright install --with-deps
 
       - name: Run UI tests
-        run: pnpm turbo run test --filter=@mo/ui
+        run: pnpm turbo run test --filter=@codecrib/ui
 
       - name: Auto version bump
         working-directory: packages/ui
@@ -66,7 +66,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build Storybook
-        run: pnpm --filter @mo/ui build-storybook
+        run: pnpm --filter @codecrib/ui build-storybook
 
       - name: Locate Storybook output
         id: find_storybook
