@@ -1,0 +1,1 @@
+const r={default:"rounded-lg",pill:"rounded-full"},o={base:"border",color:"border-gray-300",focus:"focus:border-primary-500 focus:ring-primary-500",ring:"focus:outline-none focus:ring-2 focus:ring-offset-0"};export{o as b,r};
