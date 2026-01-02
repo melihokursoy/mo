@@ -1,5 +1,6 @@
 import * as React from "react";
 import { cn } from "../../utils/cn";
+import { radius, border } from "../../styles/borders";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "bordered" | "elevated";
@@ -16,7 +17,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     return (
       <div
         ref={ref}
-        className={cn("rounded-xl p-6", variantStyles[variant], className)}
+        className={cn(radius.default, "p-6", variantStyles[variant], className)}
         {...props}
       >
         {children}

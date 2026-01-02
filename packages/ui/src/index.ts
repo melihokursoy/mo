@@ -17,6 +17,12 @@ export type { IconProps } from "./components/Icon/Icon";
 export { Countdown } from "./components/Countdown/Countdown";
 export type { CountdownProps } from "./components/Countdown/Countdown";
 
+export { Tag } from "./components/Tag/Tag";
+export type { TagProps } from "./components/Tag/Tag";
+
+export { Select } from "./components/Select/Select";
+export type { SelectProps, SelectItem, SelectGroup } from "./components/Select/Select";
+
 // Utilities
 export { cn } from "./utils/cn";
 // Icons are exported from a dedicated `@codecrib/ui/icons` entrypoint
