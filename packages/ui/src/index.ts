@@ -14,6 +14,9 @@ export type { BadgeProps } from "./components/Badge/Badge";
 export { Icon } from "./components/Icon/Icon";
 export type { IconProps } from "./components/Icon/Icon";
 
+export { Countdown } from "./components/Countdown/Countdown";
+export type { CountdownProps } from "./components/Countdown/Countdown";
+
 // Utilities
 export { cn } from "./utils/cn";
 // Icons are exported from a dedicated `@codecrib/ui/icons` entrypoint
