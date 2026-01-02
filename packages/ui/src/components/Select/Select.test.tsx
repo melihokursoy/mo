@@ -59,4 +59,49 @@ describe("Select", () => {
     fireEvent.click(maybeA);
     // no assertions beyond this interaction — presence without error is sufficient for now
   });
+
+  it("calls onChange once when toggling group checkbox", () => {
+    const onChange = vi.fn();
+    const { getByRole, getByLabelText } = render(
+      <Select items={items} onChange={onChange} />
+    );
+
+    const combobox = getByRole("combobox");
+    fireEvent.click(combobox);
+
+    const checkbox = getByLabelText("Select all Group");
+    fireEvent.click(checkbox);
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+    it("calls onChange once when toggling group checkbox in multiselect", () => {
+    const onChange = vi.fn();
+    const { getByRole, getByLabelText } = render(
+      <Select items={items} multiselect onChange={onChange} />
+    );
+
+    const combobox = getByRole("combobox");
+    fireEvent.click(combobox);
+
+    const checkbox = getByLabelText("Select all Group");
+    fireEvent.click(checkbox);
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+    it("calls onChange once when toggling group checkbox in multiselect+multiline", () => {
+    const onChange = vi.fn();
+    const { getByRole, getByLabelText } = render(
+      <Select items={items} multiselect multiline onChange={onChange} />
+    );
+
+    const combobox = getByRole("combobox");
+    fireEvent.click(combobox);
+
+    const checkbox = getByLabelText("Select all Group");
+    fireEvent.click(checkbox);
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
 });

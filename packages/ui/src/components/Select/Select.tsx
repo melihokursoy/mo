@@ -47,6 +47,11 @@ export const Select: React.FC<SelectProps> = ({
     }
   }, [value]);
 
+  React.useEffect(() => {
+    // Reset last emitted value when controlled `value` changes externally
+    lastEmittedRef.current = null;
+  }, [value, multiselect]);
+
   const containerRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
@@ -59,6 +64,14 @@ export const Select: React.FC<SelectProps> = ({
   }, []);
 
   const isSelected = (v: string) => internalValue.includes(v);
+  const lastEmittedRef = React.useRef<string | null>(null);
+
+  const emitChange = (next: string[]) => {
+    const payload = multiselect ? JSON.stringify(next) : next[0] || "";
+    if (lastEmittedRef.current === payload) return;
+    lastEmittedRef.current = payload;
+    if (onChange) onChange(multiselect ? next : next[0] || "");
+  };
 
   const toggleSelect = (v: string) => {
     let next: string[];
@@ -71,13 +84,13 @@ export const Select: React.FC<SelectProps> = ({
       setOpen(false);
     }
 
-    if (onChange) onChange(multiselect ? next : next[0] || "");
+    emitChange(next);
     if (value === undefined) setInternalValue(next);
   };
 
   const removeValue = (v: string) => {
     const next = internalValue.filter((x) => x !== v);
-    if (onChange) onChange(multiselect ? next : next[0] || "");
+    emitChange(next);
     if (value === undefined) setInternalValue(next);
   };
 
@@ -312,7 +325,7 @@ export const Select: React.FC<SelectProps> = ({
                                   next = allSelected ? [] : (all[0] ? [all[0]] : []);
                                   setOpen(false);
                                 }
-                                if (onChange) onChange(multiselect ? next : next[0] || "");
+                                emitChange(next);
                                 if (value === undefined) setInternalValue(next);
                               }}
                             />
