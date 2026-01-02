@@ -1,0 +1,22 @@
+import{j as r}from"./jsx-runtime-BPAEHIfW.js";import{r as i}from"./iframe-DgmDDvRY.js";import{c as C}from"./cn-2dOUpm6k.js";import"./preload-helper-PPVm8Dsz.js";function D(e){if(e instanceof Date)return e.getTime();const t=Number(e);if(!Number.isNaN(t))return t;const o=Date.parse(String(e));return Number.isNaN(o)?NaN:o}function z(e){if(e<=0)return{expired:!0,text:"00:00:00"};const t=Math.floor(e/1e3),o=Math.floor(t/86400),d=Math.floor(t%86400/3600),N=Math.floor(t%3600/60),v=t%60,m=p=>String(p).padStart(2,"0"),n=m(d+o*24),l=m(N),u=m(v);return{expired:!1,text:o>0?`${o}d ${n}:${l}:${u}`:`${n}:${l}:${u}`}}const a=i.forwardRef(({deadline:e,onComplete:t,className:o,variant:d="primary",size:N="md",...v},m)=>{const n=i.useMemo(()=>D(e),[e]),l={primary:"bg-primary-600 text-white",secondary:"bg-secondary-600 text-white",outline:"border-2 border-primary-600 text-primary-600 bg-transparent",ghost:"text-gray-700 bg-transparent"},u={sm:"text-sm px-2 py-0.5 rounded",md:"text-base px-3 py-1 rounded",lg:"text-lg px-4 py-1.5 rounded"},[c,p]=i.useState(()=>Date.now()),[y,h]=i.useState(!1);i.useEffect(()=>{if(Number.isNaN(n))return;p(Date.now());const M=setInterval(()=>p(Date.now()),1e3);return()=>clearInterval(M)},[n]),i.useEffect(()=>{Number.isNaN(n)||c>=n&&!y&&(h(!0),t?.())},[c,n,y,t]);const b=z(n-c),S=y?d==="ghost"?"text-red-600 bg-transparent":d==="outline"?"border-2 border-red-600 text-red-600 bg-transparent":"bg-red-600 text-white":l[d];return r.jsx("div",{ref:m,className:C("inline-flex items-center font-mono",S,u[N],o),...v,children:Number.isNaN(n)?"Invalid date":b.text})});a.displayName="Countdown";a.__docgenInfo={description:"",methods:[],displayName:"Countdown",props:{deadline:{required:!0,tsType:{name:"union",raw:"string | number | Date",elements:[{name:"string"},{name:"number"},{name:"Date"}]},description:"deadline as Date | timestamp | ISO string"},onComplete:{required:!1,tsType:{name:"signature",type:"function",raw:"() => void",signature:{arguments:[],return:{name:"void"}}},description:"optional callback when countdown reaches zero"},variant:{required:!1,tsType:{name:"union",raw:"'primary' | 'secondary' | 'outline' | 'ghost'",elements:[{name:"literal",value:"'primary'"},{name:"literal",value:"'secondary'"},{name:"literal",value:"'outline'"},{name:"literal",value:"'ghost'"}]},description:"visual variant to match Button",defaultValue:{value:"'primary'",computed:!1}},size:{required:!1,tsType:{name:"union",raw:"'sm' | 'md' | 'lg'",elements:[{name:"literal",value:"'sm'"},{name:"literal",value:"'md'"},{name:"literal",value:"'lg'"}]},description:"size to align with Button sizes",defaultValue:{value:"'md'",computed:!1}}}};const q={title:"Components/Countdown",component:a,tags:["autodocs"]},s=new Date(Date.now()+6e4).toISOString(),j=new Date(Date.now()-6e4).toISOString(),g={args:{deadline:s}},x={args:{deadline:j}},f={render:()=>r.jsxs("div",{className:"flex gap-3",children:[r.jsx(a,{deadline:s,variant:"primary"}),r.jsx(a,{deadline:s,variant:"secondary"}),r.jsx(a,{deadline:s,variant:"outline"}),r.jsx(a,{deadline:s,variant:"ghost"})]})},w={render:()=>r.jsxs("div",{className:"flex gap-3 items-center",children:[r.jsx(a,{deadline:s,size:"sm"}),r.jsx(a,{deadline:s,size:"md"}),r.jsx(a,{deadline:s,size:"lg"})]})};g.parameters={...g.parameters,docs:{...g.parameters?.docs,source:{originalSource:`{
+  args: {
+    deadline: oneMinuteFromNow
+  }
+}`,...g.parameters?.docs?.source}}};x.parameters={...x.parameters,docs:{...x.parameters?.docs,source:{originalSource:`{
+  args: {
+    deadline: oneMinuteAgo
+  }
+}`,...x.parameters?.docs?.source}}};f.parameters={...f.parameters,docs:{...f.parameters?.docs,source:{originalSource:`{
+  render: () => <div className="flex gap-3">
+      <Countdown deadline={oneMinuteFromNow} variant="primary" />
+      <Countdown deadline={oneMinuteFromNow} variant="secondary" />
+      <Countdown deadline={oneMinuteFromNow} variant="outline" />
+      <Countdown deadline={oneMinuteFromNow} variant="ghost" />
+    </div>
+}`,...f.parameters?.docs?.source}}};w.parameters={...w.parameters,docs:{...w.parameters?.docs,source:{originalSource:`{
+  render: () => <div className="flex gap-3 items-center">
+      <Countdown deadline={oneMinuteFromNow} size="sm" />
+      <Countdown deadline={oneMinuteFromNow} size="md" />
+      <Countdown deadline={oneMinuteFromNow} size="lg" />
+    </div>
+}`,...w.parameters?.docs?.source}}};const O=["Default","Expired","Variants","Sizes"];export{g as Default,x as Expired,w as Sizes,f as Variants,O as __namedExportsOrder,q as default};
