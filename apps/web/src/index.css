@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @source "../../../packages/ui/src/**/*.{ts,tsx}";
-@source "../../../packages/demo/src/**/*.{ts,tsx}";
 @source "./**/*.{ts,tsx}";
 
 @theme {

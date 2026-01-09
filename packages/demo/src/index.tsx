@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, Input, Badge, Icon, Select, Countdown } from '@codecrib/ui';
+import { Button, Card, Input, Badge, Icon, Select, Countdown, Tag } from '@codecrib/ui';
 import { Heart, Bell, Check } from '@codecrib/ui/icons';
 
 const Demo: React.FC = () => {
@@ -8,6 +8,7 @@ const Demo: React.FC = () => {
   const [selectValue, setSelectValue] = useState<string | undefined>(undefined);
   const [multiValue, setMultiValue] = useState<string[]>([]);
   const [groupValue, setGroupValue] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(['Alpha', 'Beta', 'Gamma']);
 
   const handleClick = () => {
     setIsLoading(true);
@@ -21,8 +22,8 @@ const Demo: React.FC = () => {
     title: { fontSize: '2.25rem', fontWeight: 700, color: '#111827', marginBottom: '0.5rem' },
     subtitle: { color: '#4B5563' },
     sectionTitle: { fontSize: '1.5rem', fontWeight: 600, marginBottom: '1rem' },
-    column: { display: 'flex', flexDirection: 'column', gap: '1rem' },
-    row: { display: 'flex', flexWrap: 'wrap', gap: '1rem' },
+    column: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+    row: { display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' },
     inputGroup: { display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 448 },
     grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' },
     iconRow: { display: 'flex', alignItems: 'center', gap: '1rem' },
@@ -35,7 +36,6 @@ const Demo: React.FC = () => {
     selectGroup: { marginTop: 12 },
     selectLabel: { display: 'block', marginBottom: 8, fontSize: 12, color: '#374151' },
     selectInfo: { marginTop: 8, fontSize: 13, color: '#6B7280' },
-    rowSmallSpacing: { display: 'flex', flexWrap: 'wrap', gap: '1rem', marginTop: '0.5rem' },
     cardTitle: { fontWeight: 600, marginBottom: '0.5rem' },
     cardText: { color: '#4B5563', fontSize: '0.875rem' },
     sectionSpacing: { marginTop: '1rem' },
@@ -77,6 +77,11 @@ const Demo: React.FC = () => {
     },
   ];
 
+  // safe icon URLs for demo (guarding against undefined indexes)
+  const appleIcon = selectItems[0]?.icon ?? '';
+  const bananaIcon = selectItems[1]?.icon ?? '';
+  const orangeIcon = selectItems[3]?.items?.[0]?.icon ?? '';
+
   return (
     <div style={styles.container}>
       <div style={styles.inner}>
@@ -110,16 +115,18 @@ const Demo: React.FC = () => {
 
         <Card variant="bordered">
           <h2 style={styles.sectionTitle}>Badges</h2>
-          <div style={styles.row}>
-            <Badge variant="default">Default</Badge>
-            <Badge variant="success">Success</Badge>
-            <Badge variant="warning">Warning</Badge>
-            <Badge variant="error">Error</Badge>
-            <Badge variant="info">Info</Badge>
-          </div>
-          <div style={styles.rowSmallSpacing}>
-            <Badge size="sm">Small</Badge>
-            <Badge size="md">Medium</Badge>
+          <div style={styles.column}>
+            <div style={styles.row}>
+              <Badge variant="default">Default</Badge>
+              <Badge variant="success">Success</Badge>
+              <Badge variant="warning">Warning</Badge>
+              <Badge variant="error">Error</Badge>
+              <Badge variant="info">Info</Badge>
+            </div>
+            <div style={styles.row}>
+              <Badge size="sm">Small</Badge>
+              <Badge size="md">Medium</Badge>
+            </div>
           </div>
         </Card>
 
@@ -136,6 +143,67 @@ const Demo: React.FC = () => {
             />
             <Input label="Password" type="password" placeholder="Enter your password" />
             <Input label="With Error" placeholder="Invalid input" error="This field is required" />
+          </div>
+        </Card>
+
+       <Card variant="bordered">
+          <h2 style={styles.sectionTitle}>Tags</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.25rem', alignItems: 'start' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <div style={{ fontWeight: 600, marginBottom: 8 }}>Variants</div>
+                <div style={styles.row}>
+                  <Tag icon={<Icon icon={Heart} weight="regular" />}>Default</Tag>
+                  <Tag variant="success" icon={<Icon icon={Check} weight="regular" />}>Success</Tag>
+                  <Tag variant="warning" icon={<Icon icon={Bell} weight="regular" />}>Warning</Tag>
+                  <Tag variant="error" icon={<Icon icon={Bell} weight="regular" />}>Error</Tag>
+                  <Tag variant="info" icon={<Icon icon={Heart} weight="regular" />}>Info</Tag>
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontWeight: 600, marginBottom: 8 }}>Sizes</div>
+                <div style={styles.row}>
+                  <Tag size="sm">Small</Tag>
+                  <Tag size="md">Medium</Tag>
+                  <Tag size="lg">Large</Tag>
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontWeight: 600, marginBottom: 8 }}>Removable</div>
+                <div style={styles.row}>
+                  {tags.map((t) => (
+                    <Tag
+                      key={t}
+                      removable
+                      removeLabel={`Remove ${t}`}
+                      onRemove={() => setTags((s) => s.filter((x) => x !== t))}
+                    >
+                      {t}
+                    </Tag>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontWeight: 600, marginBottom: 8 }}>Iconned (sizes)</div>
+                <div style={styles.row}>
+                  <Tag size="sm" icon={<Icon icon={Heart} weight="regular" />}>Small</Tag>
+                  <Tag size="md" icon={<Icon icon={Check} weight="regular" />}>Medium</Tag>
+                  <Tag size="lg" icon={<Icon icon={Bell} weight="regular" />}>Large</Tag>
+                </div>
+              </div>
+
+                <div>
+                  <div style={{ fontWeight: 600, marginBottom: 8 }}>Iconned (external URLs)</div>
+                  <div style={styles.row}>
+                    <Tag size="sm" icon={appleIcon}>Apple</Tag>
+                    <Tag size="md" icon={bananaIcon}>Banana</Tag>
+                    <Tag size="lg" icon={orangeIcon}>Orange</Tag>
+                  </div>
+                </div>
+            </div>
           </div>
         </Card>
 
@@ -262,20 +330,22 @@ const Demo: React.FC = () => {
           </div>
           <div style={styles.sectionSpacing}>
             <h3 style={styles.subsectionTitle}>Buttons with Icons</h3>
-            <div style={styles.row}>
-              <Button size="sm" icon={<Heart />} iconPosition="left">Like</Button>
-              <Button size="sm" icon={<Bell />} iconPosition="right">Notify</Button>
-              <Button size="sm" variant="outline" icon={<Check />} iconPosition="left">Confirm</Button>
-            </div>
-            <div style={styles.rowSmallSpacing}>
-              <Button size="md" icon={<Heart />} iconPosition="left">Like</Button>
-              <Button size="md" icon={<Bell />} iconPosition="right">Notify</Button>
-              <Button size="md" variant="outline" icon={<Check />} iconPosition="left">Confirm</Button>
-            </div>
-            <div style={styles.rowSmallSpacing}>
-              <Button size="lg" icon={<Heart />} iconPosition="left">Like</Button>
-              <Button size="lg" icon={<Bell />} iconPosition="right">Notify</Button>
-              <Button size="lg" variant="outline" icon={<Check />} iconPosition="left">Confirm</Button>
+            <div style={styles.column}>
+              <div style={styles.row}>
+                <Button size="sm" icon={<Heart />} iconPosition="left">Like</Button>
+                <Button size="sm" icon={<Bell />} iconPosition="right">Notify</Button>
+                <Button size="sm" variant="outline" icon={<Check />} iconPosition="left">Confirm</Button>
+              </div>
+              <div style={styles.row}>
+                <Button size="md" icon={<Heart />} iconPosition="left">Like</Button>
+                <Button size="md" icon={<Bell />} iconPosition="right">Notify</Button>
+                <Button size="md" variant="outline" icon={<Check />} iconPosition="left">Confirm</Button>
+              </div>
+              <div style={styles.row}>
+                <Button size="lg" icon={<Heart />} iconPosition="left">Like</Button>
+                <Button size="lg" icon={<Bell />} iconPosition="right">Notify</Button>
+                <Button size="lg" variant="outline" icon={<Check />} iconPosition="left">Confirm</Button>
+              </div>
             </div>
           </div>
         </Card>
