@@ -1,7 +1,12 @@
-name: Publish @codecrib/ui to npm
+name: UI CI & Publish
 
 on:
   push:
+    branches:
+      - master
+    paths:
+      - "packages/ui/**"
+  pull_request:
     branches:
       - master
     paths:
@@ -13,13 +18,47 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  publish:
+  build-and-test:
+    name: Build and Test @codecrib/ui
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build UI package
+        run: pnpm --filter @codecrib/ui run build
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @codecrib/ui exec -- playwright install --with-deps
+
+      - name: Run UI tests
+        run: pnpm turbo run test --filter=@codecrib/ui
+
+  publish:
+    name: Publish @codecrib/ui
+    runs-on: ubuntu-latest
+    needs: build-and-test
     permissions:
       contents: write
       pages: write
       id-token: write
-
+    if: github.event_name == 'push'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,15 +78,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        
-      - name: Build UI package
-        run: pnpm --filter @codecrib/ui build
-
-      - name: Install Playwright browsers
-        run: pnpm --filter @codecrib/ui exec -- playwright install --with-deps
-
-      - name: Run UI tests
-        run: pnpm turbo run test --filter=@codecrib/ui
 
       - name: Auto version bump
         working-directory: packages/ui

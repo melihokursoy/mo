@@ -30,6 +30,7 @@
       "require": "./dist/index.cjs"
     },
     "./styles.css": "./dist/styles.css",
+    "./preset": "./dist/tailwind.preset.cjs",
     "./icons": {
       "types": "./src/icons.ts",
       "import": "./src/icons.ts",
@@ -43,8 +44,10 @@
     "**/*.css"
   ],
   "scripts": {
-    "build": "tsup && pnpm build:styles",
+    "build": "tsup && pnpm build:styles && pnpm build:preset",
+    "prepare": "pnpm build:styles",
     "build:styles": "npx @tailwindcss/cli -i ./src/styles.css -o ./dist/styles.css --minify",
+    "build:preset": "cp ./src/tailwind.preset.cjs ./dist/tailwind.preset.cjs",
     "dev": "tsup --watch",
     "lint": "pnpm exec eslint --config ../../eslint.config.cjs --ext .ts,.tsx src/",
     "check-types": "tsc --noEmit",

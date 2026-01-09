@@ -1,16 +1,15 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "@codecrib/demo": path.resolve(__dirname, "../../packages/demo/src"),
-      "@codecrib/ui": path.resolve(__dirname, "../../packages/ui/src"),
+      // Do not alias `@codecrib/ui` here — allow package exports to resolve to `dist` so
+      // `import '@codecrib/ui/styles.css'` picks up the prebuilt CSS in `packages/ui/dist`.
     },
   },
 });

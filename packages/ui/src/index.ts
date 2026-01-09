@@ -26,3 +26,5 @@ export type { SelectProps, SelectItem, SelectGroup } from "./components/Select/S
 // Utilities
 export { cn } from "./utils/cn";
 // Icons are exported from a dedicated `@codecrib/ui/icons` entrypoint
+
+// Demo app moved to its own package: @codecrib/demo
